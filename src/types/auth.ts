@@ -23,4 +23,5 @@ export interface IUser {
     deletedAt?: string;
     createdAt: string;
     updatedAt: string;
+    isFirstLogin: boolean;
 }
