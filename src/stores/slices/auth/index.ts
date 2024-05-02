@@ -17,6 +17,13 @@ const initialState: AuthState = {
     user: null,
 };
 
+// interface PayloadData {
+//     data: {
+//         token: string;
+//         user: IUser;
+//     };
+// }
+
 export const login = createAsyncThunk(
     'auth/login',
     async (params: LoginRequest, thunkAPI) => {
@@ -51,7 +58,7 @@ const authSlice = createSlice({
                 state.user = null;
             })
             .addCase(login.fulfilled, (state, action) => {
-                const { token, user } = action.payload;
+                const { token, user } = action.payload?.data;
                 state.token = token;
                 state.user = user;
                 state.isLoggedIn = true;
