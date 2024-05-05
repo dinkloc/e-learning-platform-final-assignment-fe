@@ -62,7 +62,7 @@ Instance.interceptors.response.use(
         const statusCode = response?.status;
         if (statusCode === 401) {
             isTokenExpired = true;
-            store.dispatch(authActions.logout());
+            // store.dispatch(authActions.logout());
             window.location.href = '/login';
         }
         if (statusCode === 403) {

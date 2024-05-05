@@ -3,7 +3,7 @@ import NavListMenu from "./NavListMenu";
 
 const Header = () => {
   return (
-    <div className="grid w-full grid-cols-12 text-center pt-6 pb-8 border-b-2 border-gray-200 sticky top-0 bg-gray-50">
+    <div className="grid w-full grid-cols-12 text-center py-6 border-b-2 border-gray-200 sticky top-0 bg-gray-50">
       <div className="col-span-3">Logo</div>
       <div className="col-span-6 grid grid-cols-12">
         <div className="col-span-4 flex justify-center">

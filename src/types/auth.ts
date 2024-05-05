@@ -4,8 +4,10 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-    token: string;
-    user: IUser;
+    data: {
+        user: IUser,
+        token: string
+    }
 }
 
 export interface IUser {
@@ -24,4 +26,5 @@ export interface IUser {
     createdAt: string;
     updatedAt: string;
     isFirstLogin: boolean;
+    userName: string;
 }

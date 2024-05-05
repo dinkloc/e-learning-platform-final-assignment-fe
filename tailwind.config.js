@@ -1,4 +1,5 @@
 
+import { button, typography } from "@material-tailwind/react";
 import withMT from "@material-tailwind/react/utils/withMT";
 export default withMT({
   content: [
@@ -11,9 +12,6 @@ export default withMT({
     fontFamily: {
       sans: ["Pretendard", "sans-serif"],
     },
-    colors: {
-      default: "#263238"
-    }
   },
   plugins: [],
 })

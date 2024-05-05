@@ -5,7 +5,7 @@ const IntroPageComponent = () => {
     <div className="bg-white py-24 sm:py-32  ">
       <div className="mx-auto max-w-7xl px-6 lg:px-8 max-h-[388px] h-full">
         <div className="mx-auto max-w-2xl lg:text-center ">
-          <h2 className="text-base font-semibold leading-7 text-indigo-600">
+          <h2 className="text-2xl font-semibold leading-7 text-indigo-600">
             <ReactTyped
               strings={["Learning Faster"]}
               typeSpeed={300}
@@ -29,7 +29,7 @@ const IntroPageComponent = () => {
           <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
             <div className=" flex flex-row justify-between">
               <dt className="text-base font-semibold leading-7 text-gray-900 pe-6">
-                <div className="left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+                <div className="left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-800">
                   <svg
                     className="h-6 w-6 text-white"
                     fill="none"

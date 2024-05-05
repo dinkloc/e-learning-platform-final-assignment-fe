@@ -1,26 +1,27 @@
-import { authActions } from "../../stores/slices/auth/index";
-import { useAppDispatch } from "../../stores/index";
+import { useAppSelector } from "../../stores/index";
 import Header from "../../layouts/Header/index";
 import CardCourse from "../CardCourse";
 import Footer from "../../layouts/Footer/index";
 import IntroPageComponent from "../IntroHome";
+import LoadingComponent from "../Loading";
 
 const HomePageComponent = () => {
-  const dispatch = useAppDispatch();
-  return (
-    <div>
+  const { isLogout } = useAppSelector((state) => state.auth);
+  return isLogout ? (
+    <>
+      <Header />
+      <LoadingComponent />
+      <IntroPageComponent />
+      <CardCourse />
+      <Footer />
+    </>
+  ) : (
+    <>
       <Header />
       <IntroPageComponent />
       <CardCourse />
-      {/* <button
-        onClick={() => {
-          dispatch(authActions.logout());
-        }}
-      >
-        Logout
-      </button> */}
       <Footer />
-    </div>
+    </>
   );
 };
 

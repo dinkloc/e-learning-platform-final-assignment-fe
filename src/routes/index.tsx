@@ -8,6 +8,8 @@ import AdminLayout from "../layouts/AdminLayout/AdminLayout";
 import Dashboard from "../pages/Dashboard/index";
 import NotFoundPageComponent from "../components/NotFoundPage/index";
 import DetailCoursePageComponent from "../components/DetailCourse/index";
+import LearnLecturePageComponent from "../components/LearnLecture/index";
+import ProfilePage from "../pages/Profile/index";
 
 const RouterList = () => {
   return useRoutes([
@@ -32,8 +34,19 @@ const RouterList = () => {
           element: <HomePage />,
         },
         {
+          path: "/user/:name",
+          element: <ProfilePage />,
+        },
+        {
+          path: "/user/edit/:name",
+        },
+        {
           path: "/course/:id",
           element: <DetailCoursePageComponent />,
+        },
+        {
+          path: "/course/:id/learn/lecture/:id",
+          element: <LearnLecturePageComponent />,
         },
       ],
     },
