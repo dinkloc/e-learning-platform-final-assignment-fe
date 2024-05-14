@@ -1,5 +1,6 @@
-import { authActions } from "../stores/slices/auth";
 import { store } from "../stores/index";
+import { authActions } from '../stores/slices/auth';
+
 import Axios, { AxiosRequestConfig, AxiosResponse, CancelTokenSource } from "axios";
 
 const baseUrl = "http://localhost:5000";
@@ -62,7 +63,7 @@ Instance.interceptors.response.use(
         const statusCode = response?.status;
         if (statusCode === 401) {
             isTokenExpired = true;
-            // store.dispatch(authActions.logout());
+            store.dispatch(authActions.logout());
             window.location.href = '/login';
         }
         if (statusCode === 403) {

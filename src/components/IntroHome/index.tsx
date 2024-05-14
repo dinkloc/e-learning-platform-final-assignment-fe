@@ -1,26 +1,31 @@
+import { NavLink } from "react-router-dom";
 import { ReactTyped } from "react-typed";
 
 const IntroPageComponent = () => {
   return (
-    <div className="bg-white py-24 sm:py-32  ">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 max-h-[388px] h-full">
-        <div className="mx-auto max-w-2xl lg:text-center ">
-          <h2 className="text-2xl font-semibold leading-7 text-indigo-600">
-            <ReactTyped
-              strings={["Learning Faster"]}
-              typeSpeed={300}
-              loop
-              showCursor={false}
-            />
-          </h2>
-          <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            <ReactTyped
-              strings={["Everything you need to learning computer science"]}
-              typeSpeed={300}
-              loop
-              showCursor={false}
-            />
-          </p>
+    <div className="bg-white pt-24 sm:py-20  ">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto lg:text-center ">
+          <div className="h-[28px] min-h-[28px]">
+            <h2 className="text-2xl font-semibold leading-7 text-indigo-600">
+              <ReactTyped
+                strings={["Learning Faster"]}
+                typeSpeed={300}
+                loop
+                showCursor={false}
+              />
+            </h2>
+          </div>
+          <div className="h-[40px] min-h-[40px]">
+            <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+              <ReactTyped
+                strings={["Everything you need to learning computer science"]}
+                typeSpeed={300}
+                loop
+                showCursor={false}
+              />
+            </p>
+          </div>
           <p className="mt-6 text-lg leading-8 text-gray-600">
             Everything you need to learning computer science
           </p>
@@ -29,7 +34,7 @@ const IntroPageComponent = () => {
           <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
             <div className=" flex flex-row justify-between">
               <dt className="text-base font-semibold leading-7 text-gray-900 pe-6">
-                <div className="left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-800">
+                <div className="left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
                   <svg
                     className="h-6 w-6 text-white"
                     fill="none"
@@ -48,7 +53,7 @@ const IntroPageComponent = () => {
               </dt>
               <div>
                 <dd className="text-base font-semibold leading-7 text-gray-900">
-                  Push to deploy
+                  Udemy
                 </dd>
                 <dd className="mt-2 text-base leading-7 text-gray-600">
                   Morbi viverra dui mi arcu sed. Tellus semper adipiscing
@@ -77,7 +82,7 @@ const IntroPageComponent = () => {
               </dt>
               <div>
                 <dd className="text-base font-semibold leading-7 text-gray-900">
-                  Push to deploy
+                  Coursera
                 </dd>
                 <dd className="mt-2 text-base leading-7 text-gray-600">
                   Morbi viverra dui mi arcu sed. Tellus semper adipiscing
@@ -86,6 +91,13 @@ const IntroPageComponent = () => {
               </div>
             </div>
           </dl>
+        </div>
+        <div className="mt-[100px]">
+          <div className="flex justify-center">
+            <button className="bg-indigo-600  py-3 px-8 text-xl font-medium text-white rounded-[30px] hover:bg-blue-900">
+              <NavLink to={"/course"}>Get Started</NavLink>
+            </button>
+          </div>
         </div>
       </div>
     </div>

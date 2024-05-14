@@ -10,6 +10,9 @@ import NotFoundPageComponent from "../components/NotFoundPage/index";
 import DetailCoursePageComponent from "../components/DetailCourse/index";
 import LearnLecturePageComponent from "../components/LearnLecture/index";
 import ProfilePage from "../pages/Profile/index";
+import EnrollmentAdmin from "../components/Admin/EnrollmentAdmin";
+import UserPageAdmin from "../components/Admin/UserAdmin";
+import CoursePageComponent from "../components/Courses/index";
 
 const RouterList = () => {
   return useRoutes([
@@ -34,11 +37,15 @@ const RouterList = () => {
           element: <HomePage />,
         },
         {
+          path: "/course",
+          element: <CoursePageComponent />,
+        },
+        {
           path: "/user/:name",
           element: <ProfilePage />,
         },
         {
-          path: "/user/edit/:name",
+          path: "/user/edit/:id",
         },
         {
           path: "/course/:id",
@@ -54,8 +61,19 @@ const RouterList = () => {
       element: <AdminLayout />,
       children: [
         {
-          path: "/admin",
+          path: "/admin/dashboard",
           element: <Dashboard />,
+        },
+        {
+          path: "/admin/enrollment",
+          element: <EnrollmentAdmin />,
+        },
+        {
+          path: "/admin/user",
+          element: <UserPageAdmin />,
+        },
+        {
+          path: "/admin/course",
         },
       ],
     },

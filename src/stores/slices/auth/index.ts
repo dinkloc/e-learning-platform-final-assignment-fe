@@ -9,14 +9,12 @@ export interface AuthState {
     token: string;
     isLoggedIn: boolean;
     user: IUser | null;
-    isLogout: boolean
 }
 
 const initialState: AuthState = {
     token: '',
     isLoggedIn: false,
     user: null,
-    isLogout: false
 };
 
 export const login = createAsyncThunk(
@@ -31,18 +29,6 @@ export const login = createAsyncThunk(
     }
 );
 
-export const logout = createAsyncThunk(
-    'auth/logout',
-    async () => {
-        try {
-            const result = await AuthService.logout();
-            return result;
-        } catch (error) {
-            console.log(error)
-        }
-    }
-)
-
 const authSlice = createSlice({
     name: 'auth',
     initialState,
@@ -51,6 +37,9 @@ const authSlice = createSlice({
         setIsLogin: (state, action: PayloadAction<boolean>) => {
             state.isLoggedIn = action.payload;
         },
+        logout: (state) => {
+            state.isLoggedIn = false
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -68,19 +57,6 @@ const authSlice = createSlice({
                 state.isLoggedIn = false;
                 state.user = null;
             });
-        builder
-            .addCase(logout.pending, (state) => {
-                state.isLogout = true
-            })
-            .addCase(logout.fulfilled, (state) => {
-                state.isLogout = false
-                state.isLoggedIn = false
-                state.token = '';
-                state.user = null;
-            })
-            .addCase(logout.rejected, (state) => {
-                state.isLogout = false
-            })
     }
 })
 

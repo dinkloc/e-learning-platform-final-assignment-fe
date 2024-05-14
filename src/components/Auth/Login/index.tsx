@@ -42,7 +42,7 @@ const LoginPageComponent = () => {
 
   return loading ? (
     <>
-      <div className="col-span-4 col-start-5 bg-gray-500 rounded-md relative">
+      <div className="col-span-4 col-start-5 bg-gray-200 rounded-md relative">
         <div className="flex justify-start px-5 pt-3">
           <h1 className="font-medium text-4xl">Login Page</h1>
         </div>
@@ -95,7 +95,7 @@ const LoginPageComponent = () => {
       <LoadingComponent />
     </>
   ) : (
-    <div className="col-span-4 col-start-5 bg-gray-500 rounded-md relative">
+    <div className="col-span-4 col-start-5 bg-gray-300 p-4 rounded-md relative">
       <div className="flex justify-start px-5 pt-3">
         <h1 className="font-medium text-4xl">Login Page</h1>
       </div>

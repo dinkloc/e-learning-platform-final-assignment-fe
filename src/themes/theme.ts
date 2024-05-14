@@ -13,8 +13,8 @@ export const theme = {
             base: {
                 container: {
                     display: "block",
-                    position: "relative",
                     width: "w-full",
+                    margin: "mt-4"
                 },
                 header: {
                     initial: {
@@ -22,7 +22,7 @@ export const theme = {
                         justifyContent: "justify-between",
                         alignItems: "items-center",
                         width: "w-full",
-                        py: "py-4",
+                        py: "pb-4",
                         borderWidth: "border-b border-b-blue-gray-100",
                         color: "text-black",
                         fontSmoothing: "antialiased",
@@ -43,13 +43,17 @@ export const theme = {
                 body: {
                     display: "block",
                     width: "w-full",
-                    py: "py-4",
+                    py: "py-2 ps-4",
                     color: "text-black",
                     fontSmoothing: "",
                     fontFamily: "",
                     fontSize: "text-sx",
                     fontWeight: "font-base",
                     lineHeight: "leading-normal",
+                    flex: "flex flex-row gap-2",
+                    hover: "hover:bg-gray-400",
+                    rounded: "rounded-lg",
+                    margin: "mt-2"
                 },
                 disabled: {
                     pointerEvents: "pointer-events-none",

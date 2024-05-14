@@ -1,3 +1,3 @@
-const AdminLayout = () => {};
+const AdminPageComponent = () => {};
 
-export default AdminLayout;
+export default AdminPageComponent;

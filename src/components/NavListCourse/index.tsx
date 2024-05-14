@@ -1,11 +1,16 @@
 import React from "react";
-import {
-  Accordion,
-  AccordionBody,
-  AccordionHeader,
-} from "@material-tailwind/react";
+import { Accordion, AccordionHeader } from "@material-tailwind/react";
+import { useQuery } from "@tanstack/react-query";
 
-function Icon({ id, open }) {
+import Instance from "../../services/instance";
+import ListAllLesson from "./ListAllLesson";
+
+type IconProps = {
+  id: number;
+  open: number;
+};
+
+const Icon: React.FC<IconProps> = ({ id, open }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -24,57 +29,59 @@ function Icon({ id, open }) {
       />
     </svg>
   );
-}
+};
 
-const NavListComponent = () => {
+type NavListProp = {
+  id: number;
+};
+
+const NavListComponent: React.FC<NavListProp> = ({ id }) => {
   const [open, setOpen] = React.useState<number>(0);
+  const [sectionId, setSectionId] = React.useState<number>(0);
 
-  const handleOpen = (value: number) => setOpen(open === value ? 0 : value);
+  const fetchDataSectionById = async (id: number) => {
+    try {
+      const res = await Instance.get(`section/${id}`);
+      const { data } = res;
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const { isPending, isError, data } = useQuery({
+    queryKey: ["section", id],
+    queryFn: () => fetchDataSectionById(id),
+    staleTime: Infinity,
+  });
+
+  const handleOpen = (value: number) => {
+    setSectionId(value);
+    setOpen(open === value ? 0 : value);
+  };
+
+  if (isPending) {
+    return <h1>Loading</h1>;
+  }
+
+  if (isError) {
+    return <h1>Error</h1>;
+  }
+
   return (
     <>
-      <Accordion
-        className="!text-black"
-        open={open === 1}
-        icon={<Icon id={1} open={open} />}
-      >
-        <AccordionHeader onClick={() => handleOpen(1)}>
-          How to use Material Tailwind?
-        </AccordionHeader>
-        <AccordionBody>
-          We&apos;re not always in the position that we want to be at.
-          We&apos;re constantly growing. We&apos;re constantly making mistakes.
-          We&apos;re constantly trying to express ourselves and actualize our
-          dreams.
-        </AccordionBody>
-      </Accordion>
-      <Accordion open={open === 2} icon={<Icon id={2} open={open} />}>
-        <AccordionHeader onClick={() => handleOpen(2)}>
-          How to use Material Tailwind?
-        </AccordionHeader>
-        <AccordionBody>
-          We&apos;re not always in the position that we want to be at.
-          We&apos;re constantly growing. We&apos;re constantly making mistakes.
-          We&apos;re constantly trying to express ourselves and actualize our
-          dreams.
-        </AccordionBody>
-        <AccordionBody>
-          We&apos;re not always in the position that we want to be at.
-          We&apos;re constantly growing. We&apos;re constantly making mistakes.
-          We&apos;re constantly trying to express ourselves and actualize our
-          dreams.
-        </AccordionBody>
-      </Accordion>
-      <Accordion open={open === 3} icon={<Icon id={3} open={open} />}>
-        <AccordionHeader onClick={() => handleOpen(3)}>
-          What can I do with Material Tailwind?
-        </AccordionHeader>
-        <AccordionBody>
-          We&apos;re not always in the position that we want to be at.
-          We&apos;re constantly growing. We&apos;re constantly making mistakes.
-          We&apos;re constantly trying to express ourselves and actualize our
-          dreams.
-        </AccordionBody>
-      </Accordion>
+      {data.map((value: any, index: number) => (
+        <Accordion
+          key={index + 1}
+          open={open === value.section_id}
+          icon={<Icon id={value.section_id} open={open} />}
+        >
+          <AccordionHeader onClick={() => handleOpen(value.section_id)}>
+            {value.section_name}
+          </AccordionHeader>
+          <ListAllLesson sectionId={sectionId} />
+        </Accordion>
+      ))}
     </>
   );
 };

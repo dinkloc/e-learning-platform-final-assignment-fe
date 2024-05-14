@@ -7,10 +7,14 @@ const AdminLayout = () => {
   console.log(user, token, isLoggedIn);
 
   return user?.role === "ADMIN" ? (
-    <>
-      <SidebarWithBurgerMenu />
-      <Outlet />
-    </>
+    <div className="h-screen grid grid-cols-12">
+      <div className="col-span-2">
+        <SidebarWithBurgerMenu />
+      </div>
+      <div className="col-span-10">
+        <Outlet />
+      </div>
+    </div>
   ) : (
     <h1>You dont have premision</h1>
   );

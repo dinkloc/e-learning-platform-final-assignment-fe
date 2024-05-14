@@ -1,6 +1,4 @@
 import { ChangeEvent, useState } from "react";
-import Header from "../../layouts/Header/index";
-import NavListComponent from "../NavListCourse";
 import {
   Button,
   Dialog,
@@ -8,30 +6,111 @@ import {
   DialogFooter,
   DialogHeader,
 } from "@material-tailwind/react";
-import axios from "axios";
+import { CheckCircleIcon } from "@heroicons/react/24/outline";
+
+import Header from "../../layouts/Header/index";
+import NavListComponent from "../NavListCourse";
+import Instance from "../../services/instance";
+import { NavLink, useLocation } from "react-router-dom";
+import { useAppSelector } from "../../stores/index";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const DetailCoursePageComponent = () => {
+  const { user } = useAppSelector((state) => state.auth);
+  const queryClient = useQueryClient();
+
   const [open, setOpen] = useState<boolean>(false);
   const [file, setFile] = useState<File>();
-  console.log(file);
 
   const handleOpen = () => setOpen(!open);
   const handleClose = () => {
     setFile(undefined);
     setOpen(!open);
   };
-  const handleSubmit = async () => {
-    const data = new FormData();
-    if (file) {
-      data.append("file", file);
-      data.append("userId", "1");
-      data.append("courseId", "1");
+
+  const location = useLocation();
+  const courseId = location.pathname.slice(8);
+
+  const fetchCourseById = async (id: number) => {
+    try {
+      const res = await Instance.get(`/courses/${id}`);
+      const { data } = res;
+      return data;
+    } catch (err) {
+      console.log(err);
     }
-    console.log(data);
-    const res = await axios.post("http://localhost:5000/enrollment", data, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-    console.log(res);
+  };
+
+  const {
+    isPending: isPendingCourse,
+    isError: isErrorCourse,
+    data: dataCourseById,
+  } = useQuery({
+    queryKey: ["courses", Number(courseId)],
+    queryFn: () => fetchCourseById(Number(courseId)),
+    staleTime: Infinity,
+  });
+
+  const fetchEnrollmentByUserAndCourse = async (
+    userId: number,
+    courseId: number
+  ) => {
+    try {
+      const res = await Instance.get(
+        `/enrollment/user-course?user_id=${userId}&course_id=${courseId}`
+      );
+      const { data } = res;
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const {
+    isPending,
+    isError,
+    data: dataFetchingEnrollment,
+  } = useQuery({
+    queryKey: ["enrollment", user?.id, Number(courseId)],
+    queryFn: () => fetchEnrollmentByUserAndCourse(user?.id, Number(courseId)),
+    staleTime: Infinity,
+  });
+
+  console.log(dataCourseById);
+
+  const data = new FormData();
+  if (file) {
+    data.append("file", file);
+    data.append("userId", `${user?.id}`);
+    data.append("courseId", `${courseId}`);
+  }
+
+  const mutation = useMutation({
+    mutationFn: (data) => {
+      return Instance.post("/enrollment", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    },
+    onSuccess: () => {
+      handleClose();
+      queryClient.invalidateQueries("courses", Number(courseId));
+    },
+  });
+
+  if (isPendingCourse) {
+    return <h1>Loading</h1>;
+  }
+
+  if (isErrorCourse) {
+    return <h1>Error Course</h1>;
+  }
+
+  if (mutation.error) {
+    console.log(mutation.error);
+  }
+
+  const handleSubmit = () => {
+    mutation.mutate(data);
   };
 
   return (
@@ -48,7 +127,7 @@ const DetailCoursePageComponent = () => {
           Upload your student card to enroll this course
         </DialogHeader>
         <DialogBody>
-          <form action="">
+          <form onSubmit={handleSubmit}>
             <label
               htmlFor="dropzone-file"
               className="flex flex-col items-center justify-center w-full h-50 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
@@ -86,6 +165,7 @@ const DetailCoursePageComponent = () => {
                 }}
                 className="hidden"
               />
+              <p>put your student card</p>
             </label>
             {file && (
               <div className=" mt-6 flex justify-center items-center">
@@ -108,25 +188,58 @@ const DetailCoursePageComponent = () => {
             <span>Cancel</span>
           </Button>
           <Button variant="gradient" color="green" onClick={handleSubmit}>
-            <span>Confirm</span>
+            {mutation.isPending ? <h1>Loading</h1> : <span>Confirm</span>}
           </Button>
         </DialogFooter>
       </Dialog>
       <Header />
       <div className="grid grid-cols-12">
-        <div className="bg-gray-300 h-[250px] w-full col-span-12"></div>
-        <div className="grid grid-cols-12 col-span-8 col-start-3">
-          <div className="col-span-8  p-4">
-            <div>
-              <dd className="font-bold text-2xl">
-                Trai Code 100: Introduction to Python Programming
-              </dd>
-            </div>
-            <div className="mt-6">
-              <NavListComponent />
+        <div className="bg-gray-900 h-[360px] grid w-full col-span-12">
+          <div className="grid grid-cols-12 col-span-8 py-6">
+            <div className="text-white col-span-8 col-start-3 p-4 flex flex-col gap-4">
+              <dd className="font-bold text-3xl">{dataCourseById.name}</dd>
+              <p className="text-xl font-normal max-w-[800px] text-white">
+                {dataCourseById.description}
+              </p>
+              <div className="flex flex-row gap-3">
+                <div className="text-sx">200 Rate</div>
+                <div className="text-sx">300 Student</div>
+              </div>
+              <div>
+                <p className="text-sx"> Created by Stephen Grider</p>
+              </div>
+              <div>
+                <p className="text-sx"> Created at 23-03-2002</p>
+              </div>
             </div>
           </div>
-          <div className="col-span-4  mt-[-100px]">
+        </div>
+        <div className="grid grid-cols-12 col-span-8 col-start-3">
+          <div className="col-span-8 p-4">
+            <div className="mt-6">
+              <div>
+                <p className="text-2xl font-medium">What will learn</p>
+              </div>
+              <div className="grid grid-cols-12 px-4 gap-4 mt-4">
+                <div className="col-span-6 flex flex-row gap-2">
+                  <CheckCircleIcon className="size-7" />
+                  Build an amazing e-commerce marketplace application with React{" "}
+                </div>
+                <div className="col-span-6 flex flex-row gap-2">
+                  <CheckCircleIcon className="size-7" />
+                  Build an amazing e-commerce marketplace application with React{" "}
+                </div>
+                <div className="col-span-6 flex flex-row gap-2">
+                  <CheckCircleIcon className="size-7" />
+                  Build an amazing e-commerce marketplace application with React{" "}
+                </div>
+              </div>
+            </div>
+            <div className="mt-6">
+              <NavListComponent id={Number(courseId)} />
+            </div>
+          </div>
+          <div className="col-span-4 mt-[-200px]">
             <div className="p-6">
               <img
                 src="/thumbnail-detail-course/cs-50-thumbnail.jpg"
@@ -135,12 +248,37 @@ const DetailCoursePageComponent = () => {
               />
             </div>
             <div className="flex justify-center">
-              <button
-                onClick={handleOpen}
-                className="bg-green-800 hover:bg-green-900 px-5 py-2 rounded-lg text-white"
-              >
-                Start Course
-              </button>
+              {(dataFetchingEnrollment?.statusEnrollment === "WAITING" ||
+                mutation.isSuccess) && (
+                <button className="bg-green-800 hover:bg-green-900 px-5 py-2 rounded-lg text-white">
+                  Waiting Admin Accept
+                </button>
+              )}
+
+              {dataFetchingEnrollment?.statusEnrollment === "ACCEPTED" && (
+                <button className="bg-green-800 hover:bg-green-900 px-5 py-2 rounded-lg text-white">
+                  <NavLink to={`learn/lecture/1`}>Go To Course</NavLink>
+                </button>
+              )}
+              {!mutation.isSuccess && isError && (
+                <button
+                  onClick={handleOpen}
+                  className="bg-green-800 hover:bg-green-900 px-5 py-2 rounded-lg text-white"
+                >
+                  Enroll Course
+                </button>
+              )}
+            </div>
+
+            <div className="p-6">
+              <div>
+                <p className="text-lg font-medium">
+                  This course includes: 100 video
+                </p>
+              </div>
+              <div>
+                <p className="text-lg font-medium">This course section: 50</p>
+              </div>
             </div>
           </div>
         </div>
