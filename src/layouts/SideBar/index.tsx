@@ -23,8 +23,11 @@ import {
   ChevronRightIcon,
   ChevronDownIcon,
   UsersIcon,
+  UserIcon,
+  UserPlusIcon,
 } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
+import { UserMinusIcon } from "@heroicons/react/24/solid";
 
 export function SidebarWithBurgerMenu() {
   const [open, setOpen] = React.useState(0);
@@ -68,7 +71,7 @@ export function SidebarWithBurgerMenu() {
           }}
         >
           <ListItemPrefix>
-            <InboxIcon className="h-5 w-5" />
+            <UserMinusIcon className="h-5 w-5" />
           </ListItemPrefix>
           User
         </ListItem>

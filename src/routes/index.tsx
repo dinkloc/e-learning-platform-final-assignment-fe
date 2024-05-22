@@ -13,6 +13,9 @@ import ProfilePage from "../pages/Profile/index";
 import EnrollmentAdmin from "../components/Admin/EnrollmentAdmin";
 import UserPageAdmin from "../components/Admin/UserAdmin";
 import CoursePageComponent from "../components/Courses/index";
+import CodePlaygroundPageComponent from "../components/CodePlayground/index";
+import ProblemPageComponent from "../components/Problem/index";
+import QuizPageComponent from "../components/Quiz/index";
 
 const RouterList = () => {
   return useRoutes([
@@ -41,6 +44,14 @@ const RouterList = () => {
           element: <CoursePageComponent />,
         },
         {
+          path: "/problem",
+          element: <ProblemPageComponent />,
+        },
+        {
+          path: "/code-playground",
+          element: <CodePlaygroundPageComponent />,
+        },
+        {
           path: "/user/:name",
           element: <ProfilePage />,
         },
@@ -54,6 +65,10 @@ const RouterList = () => {
         {
           path: "/course/:id/learn/lecture/:id",
           element: <LearnLecturePageComponent />,
+        },
+        {
+          path: "/course/:id/learn/lecture/:id/quiz",
+          element: <QuizPageComponent />,
         },
       ],
     },

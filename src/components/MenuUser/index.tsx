@@ -82,7 +82,7 @@ const MenuUser = () => {
         {user?.role === "ADMIN" && (
           <MenuItem
             onClick={() => {
-              navigate("/admin");
+              navigate("/admin/dashboard");
             }}
             className="flex items-center gap-2"
           >

@@ -74,7 +74,7 @@ const CardCourse = () => {
                   50%
                 </Typography>
               </div>
-              <Progress value={50} />
+              <Progress value={10} />
             </div>
             <div className="flex flex-row justify-between p-2">
               <div>0% completion</div>

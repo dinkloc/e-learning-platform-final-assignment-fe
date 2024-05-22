@@ -238,6 +238,89 @@ const DetailCoursePageComponent = () => {
             <div className="mt-6">
               <NavListComponent id={Number(courseId)} />
             </div>
+            <div className="mt-6">
+              <div>
+                <h1 className="text-xl font-medium mb-4">Review Section</h1>
+              </div>
+              <div className="grid grid-cols-12 gap-4">
+                <div className="col-span-6">
+                  <div className="flex flex-row gap-3">
+                    <img
+                      src="https://profile-user-image.s3.amazonaws.com/avatar.png"
+                      alt=""
+                      className="w-[45px] h-[45px] rounded-[50%]"
+                    />
+                    <div className="flex flex-col">
+                      <p className="font-bold text-lg">User Name</p>
+                      <p className="font-medium text-sm">Rate</p>
+                    </div>
+                  </div>
+                  <div className="mt-1   p-2 text-base font-base">
+                    Thank you, Jonas, for this amazing course! As a beginner, I
+                    was worried it might be tough, but Jonas breaks it down into
+                    digestible chunks and explains each topic clearly, step by
+                    step.This course definitely requires
+                  </div>
+                </div>
+                <div className="col-span-6">
+                  <div className="flex flex-row gap-3">
+                    <img
+                      src="https://profile-user-image.s3.amazonaws.com/avatar.png"
+                      alt=""
+                      className="w-[45px] h-[45px] rounded-[50%]"
+                    />
+                    <div className="flex flex-col">
+                      <p className="font-bold text-lg">User Name</p>
+                      <p className="font-medium text-sm">Rate</p>
+                    </div>
+                  </div>
+                  <div className="mt-1   p-2 text-base font-base">
+                    Thank you, Jonas, for this amazing course! As a beginner, I
+                    was worried it might be tough, but Jonas breaks it down into
+                    digestible chunks and explains each topic clearly, step by
+                    step.This course definitely requires
+                  </div>
+                </div>
+                <div className="col-span-6">
+                  <div className="flex flex-row gap-3">
+                    <img
+                      src="https://profile-user-image.s3.amazonaws.com/avatar.png"
+                      alt=""
+                      className="w-[45px] h-[45px] rounded-[50%]"
+                    />
+                    <div className="flex flex-col">
+                      <p className="font-bold text-lg">User Name</p>
+                      <p className="font-medium text-sm">Rate</p>
+                    </div>
+                  </div>
+                  <div className="mt-1   p-2 text-base font-base">
+                    Thank you, Jonas, for this amazing course! As a beginner, I
+                    was worried it might be tough, but Jonas breaks it down into
+                    digestible chunks and explains each topic clearly, step by
+                    step.This course definitely requires
+                  </div>
+                </div>
+                <div className="col-span-6">
+                  <div className="flex flex-row gap-3">
+                    <img
+                      src="https://profile-user-image.s3.amazonaws.com/avatar.png"
+                      alt=""
+                      className="w-[45px] h-[45px] rounded-[50%]"
+                    />
+                    <div className="flex flex-col">
+                      <p className="font-bold text-lg">User Name</p>
+                      <p className="font-medium text-sm">Rate</p>
+                    </div>
+                  </div>
+                  <div className="mt-1   p-2 text-base font-base">
+                    Thank you, Jonas, for this amazing course! As a beginner, I
+                    was worried it might be tough, but Jonas breaks it down into
+                    digestible chunks and explains each topic clearly, step by
+                    step.This course definitely requires
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="col-span-4 mt-[-200px]">
             <div className="p-6">
@@ -278,6 +361,14 @@ const DetailCoursePageComponent = () => {
               </div>
               <div>
                 <p className="text-lg font-medium">This course section: 50</p>
+              </div>
+            </div>
+
+            <div className="p-6">
+              <div className="flex justify-center items-center">
+                {dataFetchingEnrollment?.statusEnrollment === "ACCEPTED" && (
+                  <p>Write a review course</p>
+                )}
               </div>
             </div>
           </div>

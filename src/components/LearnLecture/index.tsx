@@ -1,16 +1,13 @@
 import React from "react";
 import {
-  BackwardIcon,
   CheckCircleIcon,
   CodeBracketIcon,
-  ForwardIcon,
   PlayCircleIcon,
 } from "@heroicons/react/24/outline";
 import {
   Accordion,
   AccordionBody,
   AccordionHeader,
-  Progress,
 } from "@material-tailwind/react";
 import { useQuery } from "@tanstack/react-query";
 
@@ -19,6 +16,7 @@ import Instance from "../../services/instance";
 import VideoLessonComponent from "../VideoLesson";
 import { FidgetSpinner } from "react-loader-spinner";
 import DiscussionPerLesson from "../Discussion";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type IconProps = {
   id: number;
@@ -26,6 +24,9 @@ type IconProps = {
 };
 
 const Icon: React.FC<IconProps> = ({ id, open }) => {
+  const location = useLocation();
+  console.log(location);
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -50,6 +51,8 @@ const LearnLecturePageComponent = () => {
   const [open, setOpen] = React.useState<number>(0);
   const [sectionId, setSectionId] = React.useState<number>(1);
   const [lessonId, setLessonId] = React.useState<number>(1);
+
+  const navigate = useNavigate();
 
   const [srcVideo, setSrcVideo] = React.useState<string>(
     "https://cs-50x.s3.amazonaws.com/lec-0-introduction.mp4"
@@ -169,6 +172,9 @@ const LearnLecturePageComponent = () => {
                             onClick={() => {
                               setSrcVideo(value.source_video_lesson);
                               setLessonId(value.lesson_id);
+                              navigate(
+                                `/course/16/learn/lecture/${value.lesson_id}`
+                              );
                             }}
                           >
                             <p className="font-medium text-lg">
@@ -211,15 +217,13 @@ const LearnLecturePageComponent = () => {
                 </div>
                 <div className="flex flex-row gap-3">
                   <div>
-                    <button className="bg-gray-600 px-4 py-3 text-sx font-base rounded-lg text-white hover:bg-gray-800 flex flex-row gap-2 justify-center items-center">
-                      <BackwardIcon className="size-5" />
-                      Previous
-                    </button>
-                  </div>
-                  <div>
-                    <button className="bg-gray-600 px-4 py-3 text-sx font-base rounded-lg text-white hover:bg-gray-800 flex flex-row gap-2 justify-start items-center">
-                      Next
-                      <ForwardIcon className="size-5" />
+                    <button
+                      onClick={() => {
+                        navigate("quiz");
+                      }}
+                      className="bg-gray-600 px-4 py-3 text-sx font-base rounded-lg text-white hover:bg-gray-800 flex flex-row gap-2 justify-start items-center"
+                    >
+                      Navigate to quiz
                     </button>
                   </div>
                 </div>
